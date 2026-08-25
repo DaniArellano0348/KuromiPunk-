@@ -26,4 +26,4 @@ stateDiagram-v2
     ENFERMA --> MUERTA : salud <= 0
 
     MUERTA --> [*]
-```
+``` 

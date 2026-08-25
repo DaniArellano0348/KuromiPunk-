@@ -1,0 +1,12 @@
+# Ejecutables
+kuromi
+
+# Archivos compilados
+*.o
+*.exe
+
+# Carpetas de compilación
+build/
+
+# Configuración personal de VS Code
+.vscode/
