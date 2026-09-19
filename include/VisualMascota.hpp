@@ -7,13 +7,21 @@
 class VisualMascota
 {
 private:
-    sf::CircleShape figura;
-    sf::Color colorActual;
+    sf::Texture texturaFeliz;
+    sf::Texture texturaHambrienta;
+    sf::Texture texturaCansada;
+    sf::Texture texturaEnferma;
+    sf::Texture texturaMuerta;
+
+    sf::Sprite sprite;
 
 public:
     VisualMascota();
 
+    bool cargarTexturas();
+
     void actualizar(Estado estado);
+
     void dibujar(sf::RenderWindow& ventana);
 };
 

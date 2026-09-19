@@ -12,7 +12,29 @@ int main()
     ventana.setFramerateLimit(60);
 
     Mascota kuromi("Kuromi");
+
     VisualMascota visual;
+
+    if (!visual.cargarTexturas())
+    {
+        return 1;
+    }
+
+    // Cargar fondo
+    sf::Texture texturaFondo;
+
+    if (!texturaFondo.loadFromFile("assets/fondo.png"))
+    {
+        return 1;
+    }
+
+    sf::Sprite fondo(texturaFondo);
+
+    // Ajustar el fondo a la ventana
+    fondo.setScale(
+        800.0f / texturaFondo.getSize().x,
+        600.0f / texturaFondo.getSize().y
+    );
 
     while (ventana.isOpen())
     {
@@ -57,8 +79,13 @@ int main()
 
         visual.actualizar(kuromi.getEstado());
 
-        ventana.clear(sf::Color(25, 20, 30));
+        // Dibujar
+        ventana.clear();
 
+        // Primero el fondo
+        ventana.draw(fondo);
+
+        // Después Kuromi
         visual.dibujar(ventana);
 
         ventana.display();

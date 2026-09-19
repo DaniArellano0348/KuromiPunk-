@@ -1,13 +1,46 @@
 #include "VisualMascota.hpp"
+#include <iostream>
 
 VisualMascota::VisualMascota()
 {
-    figura.setRadius(100);
-    figura.setOrigin(100, 100);
-    figura.setPosition(400, 250);
+    sprite.setPosition(400, 300);
+}
 
-    colorActual = sf::Color(255, 105, 180);
-    figura.setFillColor(colorActual);
+bool VisualMascota::cargarTexturas()
+{
+    bool correcto = true;
+
+    if (!texturaFeliz.loadFromFile("assets/kuromi_feliz.png"))
+    {
+        std::cout << "Error cargando kuromi_feliz.png\n";
+        correcto = false;
+    }
+
+    if (!texturaHambrienta.loadFromFile("assets/kuromi_hambrienta.png"))
+    {
+        std::cout << "Error cargando kuromi_hambrienta.png\n";
+        correcto = false;
+    }
+
+    if (!texturaCansada.loadFromFile("assets/kuromi_cansada.png"))
+    {
+        std::cout << "Error cargando kuromi_cansada.png\n";
+        correcto = false;
+    }
+
+    if (!texturaEnferma.loadFromFile("assets/kuromi_enferma.png"))
+    {
+        std::cout << "Error cargando kuromi_enferma.png\n";
+        correcto = false;
+    }
+
+    if (!texturaMuerta.loadFromFile("assets/kuromi_muerta.png"))
+    {
+        std::cout << "Error cargando kuromi_muerta.png\n";
+        correcto = false;
+    }
+
+    return correcto;
 }
 
 void VisualMascota::actualizar(Estado estado)
@@ -15,30 +48,35 @@ void VisualMascota::actualizar(Estado estado)
     switch (estado)
     {
         case Estado::FELIZ:
-            colorActual = sf::Color(255, 105, 180);
+            sprite.setTexture(texturaFeliz);
             break;
 
         case Estado::HAMBRIENTA:
-            colorActual = sf::Color(255, 165, 0);
+            sprite.setTexture(texturaHambrienta);
             break;
 
         case Estado::CANSADA:
-            colorActual = sf::Color(100, 149, 237);
+            sprite.setTexture(texturaCansada);
             break;
 
         case Estado::ENFERMA:
-            colorActual = sf::Color(170, 80, 180);
+            sprite.setTexture(texturaEnferma);
             break;
 
         case Estado::MUERTA:
-            colorActual = sf::Color(80, 80, 80);
+            sprite.setTexture(texturaMuerta);
             break;
     }
 
-    figura.setFillColor(colorActual);
+    sprite.setScale(0.35f, 0.35f);
+
+    sprite.setOrigin(
+        sprite.getLocalBounds().width / 2,
+        sprite.getLocalBounds().height / 2
+    );
 }
 
 void VisualMascota::dibujar(sf::RenderWindow& ventana)
 {
-    ventana.draw(figura);
+    ventana.draw(sprite);
 }
