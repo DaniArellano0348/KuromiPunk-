@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Mascota.hpp"
 #include "VisualMascota.hpp"
+#include "HUD.hpp"
 
 int main()
 {
@@ -11,7 +12,15 @@ int main()
 
     ventana.setFramerateLimit(60);
 
+    // -------------------------
+    // MASCOTA
+    // -------------------------
+
     Mascota kuromi("Kuromi");
+
+    // -------------------------
+    // VISUAL DE KUROMI
+    // -------------------------
 
     VisualMascota visual;
 
@@ -20,7 +29,10 @@ int main()
         return 1;
     }
 
-    // Cargar fondo
+    // -------------------------
+    // FONDO
+    // -------------------------
+
     sf::Texture texturaFondo;
 
     if (!texturaFondo.loadFromFile("assets/fondo.png"))
@@ -30,11 +42,25 @@ int main()
 
     sf::Sprite fondo(texturaFondo);
 
-    // Ajustar el fondo a la ventana
     fondo.setScale(
         800.0f / texturaFondo.getSize().x,
         600.0f / texturaFondo.getSize().y
     );
+
+    // -------------------------
+    // HUD
+    // -------------------------
+
+    HUD hud;
+
+    if (!hud.cargarFuente())
+    {
+        return 1;
+    }
+
+    // -------------------------
+    // BUCLE PRINCIPAL
+    // -------------------------
 
     while (ventana.isOpen())
     {
@@ -77,16 +103,24 @@ int main()
             }
         }
 
+        // Actualizar interfaz
         visual.actualizar(kuromi.getEstado());
+        hud.actualizar(kuromi);
 
-        // Dibujar
+        // -------------------------
+        // DIBUJAR
+        // -------------------------
+
         ventana.clear();
 
-        // Primero el fondo
+        // 1. Fondo
         ventana.draw(fondo);
 
-        // Después Kuromi
+        // 2. Kuromi
         visual.dibujar(ventana);
+
+        // 3. HUD
+        hud.dibujar(ventana);
 
         ventana.display();
     }
