@@ -1,5 +1,6 @@
 # Ejecutables
 kuromi
+kuromi_sfml
 
 # Archivos compilados
 *.o
